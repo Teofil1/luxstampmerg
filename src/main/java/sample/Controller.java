@@ -100,7 +100,10 @@ public class Controller {
             float heightPdfPage = Float.valueOf(reader.getPageSize(reader.getNumberOfPages()).toString().split("x")[1].split(" ")[0]);
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outFile));
             Image image = Image.getInstance(pathToStamp);
-            image.setAbsolutePosition(widthPdfPage*0.6f, heightPdfPage/10);
+            System.out.println(image.getWidth());
+            System.out.println(image.getHeight());
+            image.scaleAbsolute(widthPdfPage*0.2f, widthPdfPage*0.2f);
+            image.setAbsolutePosition(widthPdfPage*0.6f, heightPdfPage*0.1f);
             System.out.println(reader.getPageSize(reader.getNumberOfPages()));
 
             PdfContentByte over = stamper.getOverContent(2);
