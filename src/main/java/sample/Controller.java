@@ -60,36 +60,7 @@ public class Controller {
     }
 
     public void merge(ActionEvent actionEvent) {
-        /*BufferedImage image = null;
-        try {
-            image = ImageIO.read(selectedFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BufferedImage overlay = null;
-        try {
-            overlay = ImageIO.read(selectedStamp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-// create the new image, canvas size is the max. of both image sizes
-        int w = Math.max(image.getWidth(), overlay.getWidth());
-        int h = Math.max(image.getHeight(), overlay.getHeight());
-        BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-
-// paint both images, preserving the alpha channels
-        Graphics g = combined.getGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.drawImage(overlay, 0, 0, null);
-
-// Save as new image
-        try {
-            ImageIO.write(combined, "PDF", new File("src/3.pdf"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
+        GetPropertyValues properties = new GetPropertyValues();
         String pathToFile = selectedFile.getPath();
         String pathToStamp = selectedStamp.getPath();
         String outFile = "src/out.pdf";
@@ -100,6 +71,8 @@ public class Controller {
             float heightPdfPage = Float.valueOf(reader.getPageSize(reader.getNumberOfPages()).toString().split("x")[1].split(" ")[0]);
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outFile));
             Image image = Image.getInstance(pathToStamp);
+            System.out.println(widthPdfPage);
+            System.out.println(heightPdfPage);
             System.out.println(image.getWidth());
             System.out.println(image.getHeight());
             image.scaleAbsolute(widthPdfPage*0.2f, widthPdfPage*0.2f);
