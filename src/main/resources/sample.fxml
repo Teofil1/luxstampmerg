@@ -2,23 +2,47 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Button fx:id="buttonSelectFile" layoutX="221.0" layoutY="79.0" mnemonicParsing="false" onAction="#selectFile" prefHeight="36.0" prefWidth="197.0" text="Wybierz plik (PDF)" />
       <TextField fx:id="textFieldFileName" editable="false" layoutX="31.0" layoutY="79.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano pliku" />
       <Button fx:id="buttonSelectStamp" layoutX="221.0" layoutY="128.0" mnemonicParsing="false" onAction="#selectStamp" prefHeight="36.0" prefWidth="197.0" text="Wybierz pieczątke (PNG, JPG)" />
       <TextField fx:id="textFieldStampName" editable="false" layoutX="31.0" layoutY="128.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano peczątki" />
-      <Button fx:id="buttonMerge" disable="true" layoutX="153.0" layoutY="232.0" mnemonicParsing="false" onAction="#merge" prefHeight="36.0" prefWidth="124.0" text="Złącz" />
-      <Button fx:id="buttonSelectDirectory" layoutX="221.0" layoutY="177.0" mnemonicParsing="false" onAction="#selectDirectory" prefHeight="36.0" prefWidth="197.0" text="Wybierz miejsce zapisania" />
-      <TextField fx:id="textFieldDirectoryName" editable="false" layoutX="31.0" layoutY="177.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano katalogu" />
+      <Button fx:id="buttonMerge" disable="true" layoutX="153.0" layoutY="351.0" mnemonicParsing="false" onAction="#merge" prefHeight="36.0" prefWidth="124.0" text="Złącz" />
+      <TextField fx:id="textFieldCoefficientSizeStamp" disable="true" layoutX="318.0" layoutY="300.0" prefHeight="30.0" prefWidth="34.0" text="1.0" />
       <Label layoutX="130.0" layoutY="14.0" prefHeight="43.0" prefWidth="170.0" text="Put a stamp!">
          <font>
             <Font name="System Bold Italic" size="28.0" />
          </font>
       </Label>
+      <Label layoutX="140.0" layoutY="229.0" prefHeight="17.0" prefWidth="150.0" text="Współrzędne pieczątki:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="257.0" prefHeight="20.0" prefWidth="18.0" text="x:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="229.0" layoutY="257.0" prefHeight="20.0" prefWidth="18.0" text="y:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="76.0" layoutY="305.0" prefHeight="20.0" prefWidth="238.0" text="Współczynnik rozmiaru pieczątki w %:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonSelectDirectory" layoutX="221.0" layoutY="179.0" mnemonicParsing="false" onAction="#selectDirectory" prefHeight="36.0" prefWidth="197.0" text="Wybierz miejsce zapisania" />
+      <TextField fx:id="textFieldDirectoryName" editable="false" layoutX="31.0" layoutY="179.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano katalogu" />
+      <Spinner fx:id="spinnerStampX" disable="true" editable="true" layoutX="121.0" layoutY="257.0" prefHeight="30.0" prefWidth="78.0" />
+      <Spinner fx:id="spinnerStampY" disable="true" editable="true" layoutX="247.0" layoutY="257.0" prefHeight="30.0" prefWidth="78.0" />
    </children>
 </Pane>

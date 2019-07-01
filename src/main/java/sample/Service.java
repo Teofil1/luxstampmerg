@@ -9,7 +9,7 @@ public class Service {
     }
 
     public static boolean validationStamp(File file){
-        return (getFileExtension(file).equals("png") || getFileExtension(file).equals("jpg"));
+        return (getFileExtension(file).equals("png") || getFileExtension(file).equals("jpg") || getFileExtension(file).equals("bmp"));
     }
 
     private static String getFileExtension(File file) {
