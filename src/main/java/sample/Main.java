@@ -11,10 +11,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        //GetPropertyValues properties = new GetPropertyValues();
-       // properties.getPropValues();
         Parent root = FXMLLoader.load(getClass().getResource("/sample.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Inserting a stamp");
         primaryStage.setScene(new Scene(root, 450, 275));
         primaryStage.setResizable(false);
         primaryStage.show();

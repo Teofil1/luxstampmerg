@@ -9,8 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -23,35 +25,51 @@ public class Controller {
     TextField textFieldStampName;
 
     @FXML
+    TextField textFieldDirectoryName;
+
+    @FXML
     Button buttonMerge;
 
     File selectedFile = null;
     File selectedStamp = null;
+    File selectedDirectory = null;
+
     
     public void selectFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        selectedFile = fileChooser.showOpenDialog(null);
         fileChooser.setTitle("Select PDF file");
+        selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             textFieldFileName.setText(selectedFile.getName());
-            if (selectedStamp!=null) {
+            if (selectedStamp!=null && selectedDirectory!=null) {
                 if (Service.validationFile(selectedFile) && Service.validationStamp(selectedStamp))
                     buttonMerge.setDisable(false);
                 else buttonMerge.setDisable(true);
             }
         }
-
-
-
     }
 
     public void selectStamp(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        selectedStamp = fileChooser.showOpenDialog(null);
         fileChooser.setTitle("Select JPG file");
+        selectedStamp = fileChooser.showOpenDialog(null);
         if (selectedStamp != null) {
             textFieldStampName.setText(selectedStamp.getName());
-            if(selectedFile!=null) {
+            if(selectedFile!=null && selectedDirectory!=null) {
+                if (Service.validationFile(selectedFile) && Service.validationStamp(selectedStamp))
+                    buttonMerge.setDisable(false);
+                else buttonMerge.setDisable(true);
+            }
+        }
+    }
+
+    public void selectDirectory(ActionEvent actionEvent) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Select directory");
+        selectedDirectory = chooser.showDialog(null);
+        if (selectedDirectory != null) {
+            textFieldDirectoryName.setText(selectedDirectory.getPath());
+            if (selectedStamp!=null && selectedFile!=null) {
                 if (Service.validationFile(selectedFile) && Service.validationStamp(selectedStamp))
                     buttonMerge.setDisable(false);
                 else buttonMerge.setDisable(true);
@@ -63,8 +81,7 @@ public class Controller {
         GetPropertyValues properties = new GetPropertyValues();
         String pathToFile = selectedFile.getPath();
         String pathToStamp = selectedStamp.getPath();
-        String outFile = "src/out.pdf";
-
+        String outFile = selectedDirectory.getPath()+"/out.pdf";
         try {
             PdfReader reader = new PdfReader(pathToFile);
             float widthPdfPage = Float.valueOf(reader.getPageSize(reader.getNumberOfPages()).toString().split("x")[0].split(" ")[1]);
@@ -76,7 +93,7 @@ public class Controller {
             System.out.println(image.getWidth());
             System.out.println(image.getHeight());
             image.scaleAbsolute(widthPdfPage*0.2f, widthPdfPage*0.2f);
-            image.setAbsolutePosition(widthPdfPage*0.6f, heightPdfPage*0.1f);
+            image.setAbsolutePosition(properties.getStampsPositionX(), properties.getStampsPositionY());
             System.out.println(reader.getPageSize(reader.getNumberOfPages()));
 
             PdfContentByte over = stamper.getOverContent(2);
