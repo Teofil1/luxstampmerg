@@ -10,9 +10,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <Button fx:id="buttonSelectFile" layoutX="221.0" layoutY="79.0" mnemonicParsing="false" onAction="#selectFile" prefHeight="36.0" prefWidth="197.0" text="Wybierz plik (PDF)" />
+      <Button fx:id="buttonSelectFile" layoutX="221.0" layoutY="79.0" mnemonicParsing="false" onAction="#selectFile" prefHeight="36.0" prefWidth="197.0" text="Wybierz plik (pdf)" />
       <TextField fx:id="textFieldFileName" editable="false" layoutX="31.0" layoutY="79.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano pliku" />
-      <Button fx:id="buttonSelectStamp" layoutX="221.0" layoutY="128.0" mnemonicParsing="false" onAction="#selectStamp" prefHeight="36.0" prefWidth="197.0" text="Wybierz pieczątke (PNG, JPG)" />
+      <Button fx:id="buttonSelectStamp" layoutX="221.0" layoutY="128.0" mnemonicParsing="false" onAction="#selectStamp" prefHeight="36.0" prefWidth="197.0" text="Wybierz pieczątke (png, jpg, bmp)" />
       <TextField fx:id="textFieldStampName" editable="false" layoutX="31.0" layoutY="128.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano peczątki" />
       <Button fx:id="buttonMerge" disable="true" layoutX="153.0" layoutY="439.0" mnemonicParsing="false" onAction="#merge" prefHeight="36.0" prefWidth="124.0" text="Złącz" />
       <Label layoutX="130.0" layoutY="14.0" prefHeight="43.0" prefWidth="170.0" text="Put a stamp!">
