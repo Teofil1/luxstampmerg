@@ -13,7 +13,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("/sample.fxml"));
         primaryStage.setTitle("Inserting a stamp");
-        primaryStage.setScene(new Scene(root, 440, 400));
+        primaryStage.setScene(new Scene(root, 440, 500));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
