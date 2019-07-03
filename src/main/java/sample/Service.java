@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.scene.control.TextField;
+import java.io.File;
+
 
 public class Service {
 
@@ -19,4 +21,15 @@ public class Service {
         else return "";
     }
 
+   public static String createNameOutFile(String path) {
+       String nameOutFile = "/Merged document.pdf";
+       File file = new File(path + nameOutFile);
+       int index = 1;
+       while (file.exists()) {
+           index++;
+           nameOutFile = "/Merged document (" + index + ").pdf";
+           file = new File(path+nameOutFile);
+       }
+       return nameOutFile;
+   }
 }

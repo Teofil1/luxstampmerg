@@ -1,41 +1,78 @@
 package sample;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+
+import java.io.*;
 import java.util.Properties;
 
 public class GetPropertyValues {
-    String value = "";
-    InputStream inputStream;
 
-    public String getValueFromProperies(String nameValues) throws IOException {
+    String propFileName = "src/main/resources/config.properties";
+
+    public String getValueFromProperies(String nameValues)  {
+        String value = "";
         try {
+            InputStream input = new FileInputStream(propFileName);
             Properties prop = new Properties();
-            String propFileName = "config.properties";
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-            if (inputStream != null) {
-                prop.load(inputStream);
-            } else {
-                throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-            }
+            prop.load(input);
             value = prop.getProperty(nameValues);
-
-        } catch (Exception e) {
-            System.out.println("Exception: " + e);
-        } finally {
-            inputStream.close();
+            input.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return value;
     }
 
-    public Float getStampsPositionX() throws IOException {
-        return Float.valueOf(getValueFromProperies("stampsPositionX"));
+    public void setValueFromProperies(String nameValues,Double value) {
+        try {
+            PropertiesConfiguration config = new PropertiesConfiguration(propFileName);
+            config.setProperty(nameValues, value.toString());
+            config.save();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Float getStampsPositionY() throws IOException {
-        return Float.valueOf(getValueFromProperies("stampsPositionY"));
+    public void setLastUsedCoefficientStampsPositionX(Double value) throws IOException {
+        setValueFromProperies("last_used_coefficient_for_zero_position_X_stamps", value);
     }
+
+    public void setLastUsedCoefficientStampsPositionY(Double value) throws IOException {
+        setValueFromProperies("last_used_coefficient_for_zero_position_Y_stamps", value);
+    }
+
+    public void setLastUsedWidthStamp(Double value) throws IOException {
+        setValueFromProperies("last_used_width_stamp", value);
+    }
+
+    public Double getDefaultCoefficientStampsPositionX() throws IOException {
+        return Double.valueOf(getValueFromProperies("default_coefficient_for_zero_position_X_stamps"));
+    }
+
+    public Double getDefaultCoefficientStampsPositionY() throws IOException {
+        return Double.valueOf(getValueFromProperies("default_coefficient_for_zero_position_Y_stamps"));
+    }
+
+    public Double getDefaultWidthStamp() throws IOException {
+        return Double.valueOf(getValueFromProperies("deafult_width_stamp"));
+    }
+
+    public Double getLastUsedCoefficientStampsPositionX() throws IOException {
+        return Double.valueOf(getValueFromProperies("last_used_coefficient_for_zero_position_X_stamps"));
+    }
+
+    public Double getLastUsedCoefficientStampsPositionY() throws IOException {
+        return Double.valueOf(getValueFromProperies("last_used_coefficient_for_zero_position_Y_stamps"));
+    }
+
+    public Double getLastUsedWidthStamp() throws IOException {
+        return Double.valueOf(getValueFromProperies("last_used_width_stamp"));
+    }
+
+
+
+
 
 
 }
