@@ -14,7 +14,7 @@
       <TextField fx:id="textFieldFileName" editable="false" layoutX="31.0" layoutY="79.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano pliku" />
       <Button fx:id="buttonSelectStamp" layoutX="221.0" layoutY="128.0" mnemonicParsing="false" onAction="#selectStamp" prefHeight="36.0" prefWidth="197.0" text="Wybierz pieczątke (png, jpg, bmp)" />
       <TextField fx:id="textFieldStampName" editable="false" layoutX="31.0" layoutY="128.0" prefHeight="36.0" prefWidth="177.0" text="Nie wybrano peczątki" />
-      <Button fx:id="buttonMerge" disable="true" layoutX="281.0" layoutY="440.0" mnemonicParsing="false" onAction="#merge" prefHeight="36.0" prefWidth="124.0" style="-fx-background-color: #0CAE00; -fx-border-color: #1F7D18;" text="Złącz" />
+      <Button fx:id="buttonMerge" disable="true" layoutX="281.0" layoutY="440.0" mnemonicParsing="false" onAction="#merge" prefHeight="36.0" prefWidth="124.0" style="-fx-background-color: #0CAE00;" text="Złącz" />
       <Label layoutX="130.0" layoutY="14.0" prefHeight="43.0" prefWidth="170.0" text="Put a stamp!">
          <font>
             <Font name="System Bold Italic" size="28.0" />
@@ -67,6 +67,6 @@
          </font>
       </Label>
       <Spinner fx:id="spinnerProcentSizeStamp" disable="true" editable="true" layoutX="175.0" layoutY="347.0" prefHeight="30.0" prefWidth="67.0" />
-      <Button fx:id="buttonSetDefaultValues" disable="true" layoutX="52.0" layoutY="440.0" mnemonicParsing="false" onAction="#setDefaultValues" prefHeight="36.0" prefWidth="170.0" style="-fx-background-color: #9AEFFF; -fx-border-color: #4DA5D8;" text="Ustaw wartości domyślne" />
+      <Button fx:id="buttonSetDefaultValues" disable="true" layoutX="52.0" layoutY="440.0" mnemonicParsing="false" onAction="#setDefaultValues" prefHeight="36.0" prefWidth="170.0" style="-fx-background-color: #9AEFFF;" text="Ustaw wartości domyślne" />
    </children>
 </Pane>

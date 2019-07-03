@@ -4,20 +4,31 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
 public class Controller extends ActionEvent{
 
@@ -83,6 +94,31 @@ public class Controller extends ActionEvent{
         textFieldFileName.textProperty().addListener(textFieldChangeListener);
         textFieldStampName.textProperty().addListener(textFieldChangeListener);
         textFieldDirectoryName.textProperty().addListener(textFieldChangeListener);
+
+
+
+       /* buttonSetDefaultValues.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                final Color startColor = Color.web("#000000");
+                final Color endColor = Color.web("#FFFFFF");
+                final ObjectProperty<Color> color = new SimpleObjectProperty<Color>(startColor);
+                final Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.ZERO, new KeyValue(color, startColor)),
+                        new KeyFrame(Duration.seconds(1), new KeyValue(color, endColor)));
+
+                final StringBinding cssColorSpec = Bindings.createStringBinding(new Callable<String>() {
+                    public String call() throws Exception {
+                        return String.format("-fx-body-color: rgb(%d, %d, %d);",
+                                (int) (256*color.get().getRed()),
+                                (int) (256*color.get().getGreen()),
+                                (int) (256*color.get().getBlue()));
+                    }
+                }, color);
+                buttonSetDefaultValues.styleProperty().bind(cssColorSpec);
+                timeline.play();
+            }
+        });*/
+
     }
     
     public void selectFile(ActionEvent actionEvent) {
@@ -107,6 +143,7 @@ public class Controller extends ActionEvent{
     }
 
     public void merge(ActionEvent actionEvent) {
+        buttonEffects(buttonMerge,"#0CAE00");
         try {
             PdfReader reader = new PdfReader(textFieldFileName.getText());
             PdfStamper stamper = new PdfStamper(reader,
@@ -162,12 +199,33 @@ public class Controller extends ActionEvent{
     }
 
     public void setDefaultValues(){
+        buttonEffects(buttonSetDefaultValues,"#9AEFFF");
         try {
             setValues(properties.getDefaultCoefficientStampsPositionX(),
                     properties.getDefaultCoefficientStampsPositionY(),properties.getDefaultWidthStamp());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void buttonEffects(Button button, String nameColor){
+        final Color startColor = Color.web("#000000");
+        final Color endColor = Color.web(nameColor);
+        final ObjectProperty<Color> color = new SimpleObjectProperty<Color>(startColor);
+        final Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(color, startColor)),
+                new KeyFrame(Duration.seconds(0.2), new KeyValue(color, endColor)));
+
+        final StringBinding cssColorSpec = Bindings.createStringBinding(new Callable<String>() {
+            public String call() throws Exception {
+                return String.format("-fx-body-color: rgb(%d, %d, %d);",
+                        (int) (256*color.get().getRed()),
+                        (int) (256*color.get().getGreen()),
+                        (int) (256*color.get().getBlue()));
+            }
+        }, color);
+        button.styleProperty().bind(cssColorSpec);
+        timeline.play();
     }
 
     public void showSymbolicPictureOfPage(Double widthPdfPage, Double heightPdfPage){
