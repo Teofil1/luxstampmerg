@@ -94,31 +94,6 @@ public class Controller extends ActionEvent{
         textFieldFileName.textProperty().addListener(textFieldChangeListener);
         textFieldStampName.textProperty().addListener(textFieldChangeListener);
         textFieldDirectoryName.textProperty().addListener(textFieldChangeListener);
-
-
-
-       /* buttonSetDefaultValues.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                final Color startColor = Color.web("#000000");
-                final Color endColor = Color.web("#FFFFFF");
-                final ObjectProperty<Color> color = new SimpleObjectProperty<Color>(startColor);
-                final Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(color, startColor)),
-                        new KeyFrame(Duration.seconds(1), new KeyValue(color, endColor)));
-
-                final StringBinding cssColorSpec = Bindings.createStringBinding(new Callable<String>() {
-                    public String call() throws Exception {
-                        return String.format("-fx-body-color: rgb(%d, %d, %d);",
-                                (int) (256*color.get().getRed()),
-                                (int) (256*color.get().getGreen()),
-                                (int) (256*color.get().getBlue()));
-                    }
-                }, color);
-                buttonSetDefaultValues.styleProperty().bind(cssColorSpec);
-                timeline.play();
-            }
-        });*/
-
     }
     
     public void selectFile(ActionEvent actionEvent) {
@@ -143,7 +118,6 @@ public class Controller extends ActionEvent{
     }
 
     public void merge(ActionEvent actionEvent) {
-        buttonEffects(buttonMerge,"#0CAE00");
         try {
             PdfReader reader = new PdfReader(textFieldFileName.getText());
             PdfStamper stamper = new PdfStamper(reader,
@@ -157,7 +131,7 @@ public class Controller extends ActionEvent{
             stamper.close();
             reader.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            labelError.setText("Error: " +e.getMessage());
         }
     }
 
@@ -199,7 +173,6 @@ public class Controller extends ActionEvent{
     }
 
     public void setDefaultValues(){
-        buttonEffects(buttonSetDefaultValues,"#9AEFFF");
         try {
             setValues(properties.getDefaultCoefficientStampsPositionX(),
                     properties.getDefaultCoefficientStampsPositionY(),properties.getDefaultWidthStamp());
@@ -208,25 +181,6 @@ public class Controller extends ActionEvent{
         }
     }
 
-    private void buttonEffects(Button button, String nameColor){
-        final Color startColor = Color.web("#000000");
-        final Color endColor = Color.web(nameColor);
-        final ObjectProperty<Color> color = new SimpleObjectProperty<Color>(startColor);
-        final Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(color, startColor)),
-                new KeyFrame(Duration.seconds(0.2), new KeyValue(color, endColor)));
-
-        final StringBinding cssColorSpec = Bindings.createStringBinding(new Callable<String>() {
-            public String call() throws Exception {
-                return String.format("-fx-body-color: rgb(%d, %d, %d);",
-                        (int) (256*color.get().getRed()),
-                        (int) (256*color.get().getGreen()),
-                        (int) (256*color.get().getBlue()));
-            }
-        }, color);
-        button.styleProperty().bind(cssColorSpec);
-        timeline.play();
-    }
 
     public void showSymbolicPictureOfPage(Double widthPdfPage, Double heightPdfPage){
         labelPageSize.setVisible(true);
@@ -278,15 +232,6 @@ public class Controller extends ActionEvent{
                 labelHeightPage.setText("");
             }
         }
-
-
-
-
     }
-
-
-
-
-
 
 }
