@@ -1,36 +1,23 @@
 package sample;
 
-import com.itextpdf.text.*;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.concurrent.Callable;
 
-public class Controller extends ActionEvent{
+public class Controller extends ActionEvent {
 
     @FXML
     TextField textFieldFileName;
@@ -57,10 +44,10 @@ public class Controller extends ActionEvent{
     Button buttonSetDefaultValues;
 
     @FXML
-    Spinner<Double>  spinnerStampX;
+    Spinner<Double> spinnerStampX;
 
     @FXML
-    Spinner<Double>  spinnerStampY;
+    Spinner<Double> spinnerStampY;
 
     @FXML
     Spinner<Double> spinnerProcentSizeStamp;
@@ -89,13 +76,13 @@ public class Controller extends ActionEvent{
     private GetPropertyValues properties = new GetPropertyValues();
 
     @FXML
-    void initialize(){
+    void initialize() {
         TextFieldChangeListener textFieldChangeListener = new TextFieldChangeListener();
         textFieldFileName.textProperty().addListener(textFieldChangeListener);
         textFieldStampName.textProperty().addListener(textFieldChangeListener);
         textFieldDirectoryName.textProperty().addListener(textFieldChangeListener);
     }
-    
+
     public void selectFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select PDF file");
@@ -107,7 +94,7 @@ public class Controller extends ActionEvent{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select JPG file");
         selectedStamp = fileChooser.showOpenDialog(null);
-        if (selectedStamp != null ) textFieldStampName.setText(selectedStamp.getPath());
+        if (selectedStamp != null) textFieldStampName.setText(selectedStamp.getPath());
     }
 
     public void selectDirectory(ActionEvent actionEvent) {
@@ -121,7 +108,7 @@ public class Controller extends ActionEvent{
         try {
             PdfReader reader = new PdfReader(textFieldFileName.getText());
             PdfStamper stamper = new PdfStamper(reader,
-                    new FileOutputStream(textFieldDirectoryName.getText()+Service.createNameOutFile(textFieldDirectoryName.getText())));
+                    new FileOutputStream(textFieldDirectoryName.getText() + Service.createNameOutFile(textFieldDirectoryName.getText())));
             Image stamp = Image.getInstance(textFieldStampName.getText());
             stamp.scalePercent(spinnerProcentSizeStamp.getValue().floatValue());
             stamp.setAbsolutePosition(spinnerStampX.getValue().floatValue(), spinnerStampY.getValue().floatValue());
@@ -131,18 +118,18 @@ public class Controller extends ActionEvent{
             stamper.close();
             reader.close();
         } catch (Exception e) {
-            labelError.setText("Error: " +e.getMessage());
+            labelError.setText("Error: " + e.getMessage());
         }
     }
 
-    public void saveValuesInConfig(PdfReader reader, Image stamp){
+    public void saveValuesInConfig(PdfReader reader, Image stamp) {
         try {
             Double widthPdfPage = (double) reader.getPageSize(reader.getNumberOfPages()).getWidth();
             Double heightPdfPage = (double) reader.getPageSize(reader.getNumberOfPages()).getHeight();
             Double widthStamp = (double) stamp.getWidth();
-            Double coefficientStampsPositionX = spinnerStampX.getValue()/widthPdfPage;
-            Double coefficientStampsPositionY = spinnerStampY.getValue()/heightPdfPage;
-            Double newWidthStamp = (widthStamp*spinnerProcentSizeStamp.getValue())/100.0;
+            Double coefficientStampsPositionX = spinnerStampX.getValue() / widthPdfPage;
+            Double coefficientStampsPositionY = spinnerStampY.getValue() / heightPdfPage;
+            Double newWidthStamp = (widthStamp * spinnerProcentSizeStamp.getValue()) / 100.0;
             properties.setLastUsedCoefficientStampsPositionX(coefficientStampsPositionX);
             properties.setLastUsedCoefficientStampsPositionY(coefficientStampsPositionY);
             properties.setLastUsedWidthStamp(newWidthStamp);
@@ -151,48 +138,48 @@ public class Controller extends ActionEvent{
         }
     }
 
-    public void setValues(Double coefficientStampsPositionX, Double coefficientStampsPositionY, Double newWidthStamp){
+    public void setValues(Double coefficientStampsPositionX, Double coefficientStampsPositionY, Double newWidthStamp) {
         try {
             PdfReader reader = new PdfReader(selectedFile.getPath());
-            Double widthPdfPage = ((int) (reader.getPageSize(reader.getNumberOfPages()).getWidth()*100.0))/100.0;
-            Double heightPdfPage = ((int) (reader.getPageSize(reader.getNumberOfPages()).getHeight()*100.0))/100.0;
+            Double widthPdfPage = ((int) (reader.getPageSize(reader.getNumberOfPages()).getWidth() * 100.0)) / 100.0;
+            Double heightPdfPage = ((int) (reader.getPageSize(reader.getNumberOfPages()).getHeight() * 100.0)) / 100.0;
             Image stamp = Image.getInstance(selectedStamp.getPath());
-            Double widthStamp = (double)stamp.getWidth();
-            Double procentSizeStamp = (newWidthStamp/widthStamp)*100.0;
+            Double widthStamp = (double) stamp.getWidth();
+            Double procentSizeStamp = (newWidthStamp / widthStamp) * 100.0;
             spinnerProcentSizeStamp.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 1000.0, procentSizeStamp));
             spinnerStampX.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0,
-                    widthPdfPage, widthPdfPage*coefficientStampsPositionX));
+                    widthPdfPage, widthPdfPage * coefficientStampsPositionX));
             spinnerStampY.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0,
-                    heightPdfPage, heightPdfPage*coefficientStampsPositionY));
+                    heightPdfPage, heightPdfPage * coefficientStampsPositionY));
             showSymbolicPictureOfPage(widthPdfPage, heightPdfPage);
             reader.close();
         } catch (Exception e) {
             e.printStackTrace();
-            labelError.setText("Error: "+e);
+            labelError.setText("Error: " + e);
         }
     }
 
-    public void setDefaultValues(){
+    public void setDefaultValues() {
         try {
             setValues(properties.getDefaultCoefficientStampsPositionX(),
-                    properties.getDefaultCoefficientStampsPositionY(),properties.getDefaultWidthStamp());
+                    properties.getDefaultCoefficientStampsPositionY(), properties.getDefaultWidthStamp());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    public void showSymbolicPictureOfPage(Double widthPdfPage, Double heightPdfPage){
+    public void showSymbolicPictureOfPage(Double widthPdfPage, Double heightPdfPage) {
         labelPageSize.setVisible(true);
-        if(widthPdfPage>heightPdfPage){
+        if (widthPdfPage > heightPdfPage) {
             verticalPage.setVisible(false);
             horizontalPage.setVisible(true);
-        }else{
+        } else {
             horizontalPage.setVisible(false);
             verticalPage.setVisible(true);
         }
-        labelHeightPage.setText(heightPdfPage+" px");
-        labelWidthPage.setText(widthPdfPage+" px");
+        labelHeightPage.setText(heightPdfPage + " px");
+        labelWidthPage.setText(widthPdfPage + " px");
     }
 
     private class TextFieldChangeListener implements ChangeListener<String> {
@@ -200,7 +187,7 @@ public class Controller extends ActionEvent{
         public void changed(ObservableValue<? extends String> observable,
                             String oldValue, String newValue) {
 
-            if(Service.validationFile(textFieldFileName) && Service.validationStamp(textFieldStampName) && selectedDirectory!=null){
+            if (Service.validationFile(textFieldFileName) && Service.validationStamp(textFieldStampName) && selectedDirectory != null) {
                 labelError.setText("");
                 spinnerProcentSizeStamp.setDisable(false);
                 spinnerStampX.setDisable(false);
@@ -209,15 +196,14 @@ public class Controller extends ActionEvent{
                 buttonSetDefaultValues.setDisable(false);
                 try {
                     setValues(properties.getLastUsedCoefficientStampsPositionX(),
-                            properties.getLastUsedCoefficientStampsPositionY(),properties.getLastUsedWidthStamp());
+                            properties.getLastUsedCoefficientStampsPositionY(), properties.getLastUsedWidthStamp());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-            else {
-                if (!Service.validationFile(textFieldFileName) && selectedFile!=null)
+            } else {
+                if (!Service.validationFile(textFieldFileName) && selectedFile != null)
                     labelError.setText("Nie poprawny format dokumentu");
-                else if(!Service.validationStamp(textFieldStampName) && selectedStamp!=null )
+                else if (!Service.validationStamp(textFieldStampName) && selectedStamp != null)
                     labelError.setText("Nie poprawny format pieczątki");
                 else labelError.setText("");
                 buttonMerge.setDisable(true);

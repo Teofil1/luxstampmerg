@@ -3,14 +3,16 @@ package sample;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class GetPropertyValues {
 
     String propFileName = "src/main/resources/config.properties";
 
-    public String getValueFromProperies(String nameValues)  {
+    public String getValueFromProperies(String nameValues) {
         String value = "";
         try {
             InputStream input = new FileInputStream(propFileName);
@@ -24,7 +26,7 @@ public class GetPropertyValues {
         return value;
     }
 
-    public void setValueFromProperies(String nameValues,Double value) {
+    public void setValueFromProperies(String nameValues, Double value) {
         try {
             PropertiesConfiguration config = new PropertiesConfiguration(propFileName);
             config.setProperty(nameValues, value.toString());
@@ -69,10 +71,6 @@ public class GetPropertyValues {
     public Double getLastUsedWidthStamp() throws IOException {
         return Double.valueOf(getValueFromProperies("last_used_width_stamp"));
     }
-
-
-
-
 
 
 }
